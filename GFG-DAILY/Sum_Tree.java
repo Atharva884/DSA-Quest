@@ -114,7 +114,6 @@ class Node
 }
 */
 class Solution {
-    static int sum;
     public static int isSum(Node root){
         if(root == null){
             return 0;
@@ -126,17 +125,21 @@ class Solution {
         return leftSum + rightSum + root.data;
     }
     
+
+    // 2nd Approach
     boolean isSumTree(Node root) {
-        int ans = isSum(root);
-        
         if(root.left == null && root.right == null){
             return true;
         }
         
-        if(root.data == (ans - root.data)){
+        int leftSum = isSum(root.left);
+        int rightSum = isSum(root.right);
+        
+        // We need to check also that the left and right subtree themselves are sum trees
+        if(leftSum + rightSum == root.data && isSumTree(root.left) && isSumTree(root.right)){
             return true;
-        }else{
-            return false;
         }
+        
+        return false;
     }
 }
