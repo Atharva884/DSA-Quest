@@ -35,10 +35,10 @@ class Solution {
 
         if(k % length == 0) return head;
 
-        k = k % length;
+        int ans = k % length;
         tail.next =  head;
 
-        ListNode newLastNode = findNthNode(head, length-k);
+        ListNode newLastNode = findNthNode(head, length-ans);
         head = newLastNode.next;
         newLastNode.next = null;
 
