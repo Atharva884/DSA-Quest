@@ -21,6 +21,7 @@ class Solution {
             fast = fast.next.next;
         }
 
+        // Note: We need to return the prev value i.e before mid
         return slow;
     }
 
