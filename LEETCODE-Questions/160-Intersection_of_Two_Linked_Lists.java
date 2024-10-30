@@ -77,6 +77,7 @@ public class Solution {
     // }
 
     // Optimal Approach
+    // TC: O(n+m), SC: O(1)
 
     public static int sizeOfLL(ListNode head){
         int count = 0;
