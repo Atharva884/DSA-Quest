@@ -14,6 +14,7 @@
  * }
  */
 class Solution {
+    // TC: O(N), SC: O(H) -> Stack space
     public static TreeNode solve(TreeNode root){
         if(root == null){
             return null;
