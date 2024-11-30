@@ -32,7 +32,7 @@ class Solution {
             return ans;
         }
         
-        HashMap<Integer, List<Integer>> map = new HashMap<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
         Queue<Pair> q = new LinkedList<>();
         q.add(new Pair(root, 0));
         
@@ -42,10 +42,7 @@ class Solution {
             int level = pair.level;
             
             if(!map.containsKey(level)){
-                map.put(level, new ArrayList<>());
-            }
-            if(map.get(level).size() == 0){
-                map.get(level).add(rem.data);
+                map.put(level, rem.data);
             }
             
             if(rem.left != null){
@@ -67,7 +64,7 @@ class Solution {
         
         
         for(int i=min; i<=max; i++){
-            ans.add(map.get(i).get(0));
+            ans.add(map.get(i));
         }
         
         return ans;
