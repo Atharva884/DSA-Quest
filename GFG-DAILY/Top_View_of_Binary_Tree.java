@@ -44,7 +44,9 @@ class Solution {
             if(!map.containsKey(level)){
                 map.put(level, new ArrayList<>());
             }
-            map.get(level).add(rem.data);
+            if(map.get(level).size() == 0){
+                map.get(level).add(rem.data);
+            }
             
             if(rem.left != null){
                 q.add(new Pair(rem.left, level - 1));
@@ -65,10 +67,7 @@ class Solution {
         
         
         for(int i=min; i<=max; i++){
-            List<Integer> tmp = map.get(i);
-            if(tmp.size() > 0){
-                ans.add(tmp.get(0));
-            }
+            ans.add(map.get(i).get(0));
         }
         
         return ans;
