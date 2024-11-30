@@ -1,80 +1,50 @@
-import java.util.*;
-
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode() {
-    }
-
-    TreeNode(int val) {
-        this.val = val;
-    }
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
-    }
-}
-
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
-    // TC: O(N), SC: O(N) - DFS
-    public static void dfs(TreeNode root, int level, List<List<Integer>> list) {
-        if (root == null) {
-            return;
-        }
-
-        if (list.size() == level) {
-            list.add(new ArrayList<>());
-        }
-        list.get(level).add(root.val);
-
-        dfs(root.left, level + 1, list);
-        dfs(root.right, level + 1, list);
-    }
-
-    // public List<List<Integer>> levelOrder(TreeNode root){
-    // List<List<Integer>> list = new ArrayList<>();
-    // dfs(root, 0, list);
-
-    // return list;
-    // }
-
-    // TC: O(N), SC: O(N) - BFS
     public List<List<Integer>> levelOrder(TreeNode root) {
-        Queue<TreeNode> q = new LinkedList<>();
-        List<List<Integer>> list = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
 
-        if (root == null) {
-            return list;
+        if(root == null){
+            return ans;
         }
 
+        Queue<TreeNode> q = new LinkedList<>();
         q.add(root);
 
-        while (q.size() > 0) {
-            int n = q.size();
+        while(q.size() != 0){
+            int size = q.size();
 
-            List<Integer> sublist = new ArrayList<>();
+            List<Integer> tmp = new ArrayList<>();
+            for(int i=0; i<size; i++){
+                TreeNode rem = q.poll();
 
-            for (int i = 0; i < n; i++) {
-                TreeNode remNode = q.remove();
+                tmp.add(rem.val);
 
-                sublist.add(remNode.val);
-
-                if (remNode.left != null) {
-                    q.add(remNode.left);
+                if(rem.left != null){
+                    q.add(rem.left);
                 }
 
-                if (remNode.right != null) {
-                    q.add(remNode.right);
+                if(rem.right != null){
+                    q.add(rem.right);
                 }
             }
 
-            list.add(sublist);
+            ans.add(tmp);
         }
 
-        return list;
+        return ans;
     }
 }
