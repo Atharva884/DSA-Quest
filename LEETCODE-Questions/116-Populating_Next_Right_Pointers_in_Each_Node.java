@@ -22,35 +22,63 @@ class Node {
 */
 
 class Solution {
-    public Node connect(Node root) {
+    // Brute Force Approach
+    // TC: O(N), SC: O(N)
+
+    // public Node connect(Node root) {
+    //     if(root == null){
+    //         return null;
+    //     }
+
+    //     Queue<Node> q = new LinkedList();
+    //     q.add(root);
+
+    //     while(q.size() != 0){
+    //         int size = q.size();
+
+    //         for(int i=0; i<size; i++){
+    //             Node rem = q.poll();
+    //             Node peek = q.peek();
+
+    //             if(i < size-1){
+    //                 rem.next = peek;
+    //             }
+
+    //             if(rem.left != null){
+    //                 q.add(rem.left);
+    //             }
+
+    //             if(rem.right != null){
+    //                 q.add(rem.right);
+    //             }
+    //         }
+    //     }
+
+    //     return root;
+    // }
+
+    public Node connect(Node root){
+        Node cur = root;
+
         if(root == null){
             return null;
         }
 
-        Queue<Node> q = new LinkedList();
-        q.add(root);
+        while(root.left != null){
+            Node tmp = root;
 
-        while(q.size() != 0){
-            int size = q.size();
-
-            for(int i=0; i<size; i++){
-                Node rem = q.poll();
-                Node peek = q.peek();
-
-                if(i < size-1){
-                    rem.next = peek;
+            while(tmp != null){
+                tmp.left.next = tmp.right;
+                if(tmp.next != null){
+                    tmp.right.next = tmp.next.left;
                 }
 
-                if(rem.left != null){
-                    q.add(rem.left);
-                }
-
-                if(rem.right != null){
-                    q.add(rem.right);
-                }
+                tmp = tmp.next;
             }
+
+            root = root.left;
         }
 
-        return root;
+        return cur;
     }
 }
