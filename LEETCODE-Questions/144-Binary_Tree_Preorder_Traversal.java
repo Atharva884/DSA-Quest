@@ -14,20 +14,35 @@
  * }
  */
 class Solution {
-    public void solve(TreeNode root, List<Integer> ans){
-        if(root == null){
-            return;
-        }
-
-        ans.add(root.val);
-        solve(root.left, ans);
-        solve(root.right, ans);
-    }
-
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
+        TreeNode cur = root;
 
-        solve(root, ans);
+        while(cur != null){
+
+            if(cur.left == null){
+                ans.add(cur.val);
+                cur = cur.right;
+            }else{
+                TreeNode curP1 = cur.left;
+
+                while(curP1.right != null && curP1.right != cur){
+                    curP1 = curP1.right;
+                }
+
+                if(curP1.right == null){
+                    curP1.right = cur;
+                    ans.add(cur.val);
+                    cur = cur.left;
+                }else{
+                    // The path is created someway back
+                    // curP1.right == cur
+                    curP1.right = null;
+                    cur = cur.right;
+                }
+            }
+
+        }
 
         return ans;
     }
