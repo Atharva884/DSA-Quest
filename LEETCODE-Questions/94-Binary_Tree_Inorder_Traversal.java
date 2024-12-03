@@ -14,20 +14,31 @@
  * }
  */
 class Solution {
-    public void solve(TreeNode root, List<Integer> ans){
-        if(root == null){
-            return;
-        }
-
-        solve(root.left, ans);
-        ans.add(root.val);
-        solve(root.right, ans);
-    }
-
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
+        TreeNode cur = root;
 
-        solve(root, ans);
+        while(cur != null){
+            if(cur.left == null){
+                ans.add(cur.val);
+                cur = cur.right;
+            }else{
+                TreeNode curP1 = cur.left;
+
+                while(curP1.right != null && curP1.right != cur){
+                    curP1 = curP1.right;
+                }
+
+                if(curP1.right == null){
+                    curP1.right = cur;
+                    cur = cur.left;
+                }else{
+                    curP1.right = null;
+                    ans.add(cur.val);
+                    cur = cur.right;
+                }
+            }
+        }
 
         return ans;
     }
