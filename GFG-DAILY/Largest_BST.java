@@ -1,37 +1,78 @@
-class NodeValue {
-    int minNode;
-    int maxNode;
-    int size;
+//User function Template for Java
 
-    NodeValue(int _minNode, int _maxNode, int _size) {
-        minNode = _minNode;
-        maxNode = _maxNode;
-        size = _size;
+// class Node  
+// { 
+//     int data; 
+//     Node left, right; 
+   
+//     public Node(int d)  
+//     { 
+//         data = d; 
+//         left = right = null; 
+//     } 
+// }
+
+
+class Solution{
+    static int maxSize;
+    static int size;
+    static int min;
+    static int max;
+    
+    public static int getSize(Node root){
+        if(root == null){
+            return 0;
+        }
+        
+        int l = getSize(root.left);
+        int r = getSize(root.right);
+        
+        return l + r + 1;
     }
-}
-
-class Solution {
-    static NodeValue largeBST(Node root) {
-        if (root == null) {
-            // Means, it is not a bst and make sure ur size is 0
-            return new NodeValue(Integer.MAX_VALUE, Integer.MIN_VALUE, 0);
+    
+    public static boolean isBST(Node root, int min, int max){
+        if(root == null){
+            return true;
         }
 
-        NodeValue left = largeBST(root.left);
-        NodeValue right = largeBST(root.right);
-
-        if (root.data > left.maxNode && root.data < right.minNode) {
-            return new NodeValue(Math.min(root.data, left.minNode), Math.max(root.data, right.maxNode),
-                    left.size + right.size + 1);
+        if(root.data < min || root.data > max){
+            return false;
         }
 
-        // If it is not a BST, then return [-inf, inf] value so that parent can't
-        // compare
-        return new NodeValue(Integer.MIN_VALUE, Integer.MAX_VALUE, Math.max(left.size, right.size));
-    }
+        boolean l = isBST(root.left, min, root.data - 1);
+        boolean r = isBST(root.right, root.data + 1, max);
 
-    static int largestBst(Node root) {
-        return largeBST(root).size;
-    }
+        if(l == false || r == false){
+            return false;
+        }
 
+        return true;
+    }
+    
+    public static void solve(Node root, int min, int max){
+        if(root == null){
+            return;
+        }
+        
+        solve(root.left, min, max);
+        solve(root.right, min, max);
+        
+        if(isBST(root, min, max)){
+            // if it's BST how to calculate the size
+            int sze = getSize(root);
+            maxSize = Math.max(maxSize, sze);
+        }
+    }
+    
+    static int largestBst(Node root){
+        min = Integer.MIN_VALUE;
+        max = Integer.MAX_VALUE;
+        size = 0;
+        maxSize = 0;
+        
+        solve(root, min, max);
+        
+        return maxSize;
+    }
+    
 }
