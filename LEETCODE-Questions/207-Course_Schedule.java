@@ -1,5 +1,5 @@
 class Solution {
-    public static ArrayList<ArrayList<Integer>> construction(int[][] edges, int V, int m){
+    public static ArrayList<ArrayList<Integer>> construction(int[][] edges, int V, int m, int[] inDeg){
         ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
 
         for(int i=0; i<V; i++){
@@ -11,30 +11,19 @@ class Solution {
             int v = edges[i][1];
 
             graph.get(u).add(v);
+            inDeg[v]++;
         }
 
         return graph;
     }
 
-    public static int[] getInDegree(ArrayList<ArrayList<Integer>> graph, int V){
-        int[] arr = new int[V];
-        
-        for(int i=0; i<V; i++){
-            ArrayList<Integer> nbrs = graph.get(i);
-            
-            for(int nbr: nbrs){
-                arr[nbr]++;
-            }
-        }
-        
-        return arr;
-    }
-
+    // TC: O(N+M), SC: O(N+M)
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         int m = prerequisites.length;
-        ArrayList<ArrayList<Integer>> graph = construction(prerequisites, numCourses, m);
 
-        int[] inDeg = getInDegree(graph, numCourses);
+        int[] inDeg = new int[numCourses];
+        
+        ArrayList<ArrayList<Integer>> graph = construction(prerequisites, numCourses, m, inDeg);
         
         Queue<Integer> q = new LinkedList<>();
         
