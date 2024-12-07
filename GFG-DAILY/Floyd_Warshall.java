@@ -1,6 +1,7 @@
 // User function template for JAVA
 
 class Solution {
+    // TC: O(V^3), SC: O(1)
     public void shortestDistance(int[][] mat) {
         int n = mat.length;
         
