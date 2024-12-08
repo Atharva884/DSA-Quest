@@ -28,6 +28,7 @@ class Solution {
         return graph;
     }
     
+    // TC: O(n + m), SC: O(n + m)
     public int[] shortestPath(int[][] edges, int n, int m, int src) {
         ArrayList<ArrayList<Integer>> graph = construction(edges, n, m);
         
