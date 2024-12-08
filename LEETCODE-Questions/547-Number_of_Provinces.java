@@ -1,44 +1,63 @@
 class Solution {
-    public void dfs(int src, ArrayList<ArrayList<Integer>> graph, boolean[] vis){
-        ArrayList<Integer> nbrs = graph.get(src);
+    // Find By Union
+    public void union(int x, int y, int[] par, int[] rank){
+        int px = find(x, par);
+        int py = find(y, par);
 
-        for(int nbr: nbrs){
-            if(!vis[nbr]){
-                vis[nbr] = true;
-                dfs(nbr, graph, vis);
-            }
+        // They are already in the same grp
+        if(px == py){
+            return;
+        }
+
+        if(rank[px] > rank[py]){
+            par[py] = px;
+        }else if(rank[px] < rank[py]){
+            par[px] = py;
+        }else{
+            // They are of same size
+            par[px] = py;
+            rank[py]++;
         }
     }
 
-    public int findCircleNum(int[][] isConnected) {
-        // Convert to Adjacency list
-        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+    // Find
+    public int find(int x, int[] par){
+        if(x == par[x]){
+            return par[x];
+        }
 
+        int temp = find(par[x], par);
+        par[x] = temp;
+
+        return temp;
+    }
+
+    public int findCircleNum(int[][] isConnected) {
         int n = isConnected.length;
 
-        for(int i=0; i<n; i++){
-            graph.add(new ArrayList<>());
+        int[] par = new int[n+1];
+        int[] rank = new int[n+1];
+
+        for(int i=1; i<=n; i++){
+            par[i] = i;
+            rank[i] = 1;
         }
+
 
         for(int i=0; i<n; i++){
             for(int j=0; j<n; j++){
-                if(i == j) continue;
                 if(isConnected[i][j] == 1){
-                    int u = i;
-                    int v = j;
+                    int u = i+1;
+                    int v = j+1;
 
-                    graph.get(u).add(v);
+                    union(u, v, par, rank);
                 }
             }
         }
 
         int ans = 0;
-        boolean[] vis = new boolean[n];
-
-        for(int i=0; i<n; i++){
-            if(!vis[i]){
-                vis[i] = true;
-                dfs(i, graph, vis);
+        for(int i=1; i<=n; i++){
+            if(par[i] == i){
                 ans++;
             }
         }
