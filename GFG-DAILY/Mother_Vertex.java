@@ -1,15 +1,18 @@
 class Solution
 {
-    // public void dfs(int src, boolean[] vis, ArrayList<ArrayList<Integer>> graph){
-    //     ArrayList<Integer> nbrs = graph.get(src);
+    public void dfs(int src, boolean[] vis, ArrayList<ArrayList<Integer>> graph, Stack<Integer> st){
+        vis[src] = true;
         
-    //     for(int nbr: nbrs){
-    //         if(!vis[nbr]){
-    //             vis[nbr] = true;
-    //             dfs(nbr, vis, graph);
-    //         }
-    //     }
-    // }
+        ArrayList<Integer> nbrs = graph.get(src);
+        
+        for(int nbr: nbrs){
+            if(!vis[nbr]){
+                dfs(nbr, vis, graph, st);
+            }
+        }
+        
+        st.push(src);
+    }
     
    
     // Brute Force Approach - {TLE}
@@ -44,4 +47,31 @@ class Solution
         
     //     return ans;
     // }
+    
+    
+    // Optimal Approach
+    // TC: O(V+E), SC: O(V)
+    public int findMotherVertex(int V, ArrayList<ArrayList<Integer>> adj){
+        Stack<Integer> st = new Stack<>();
+        boolean[] vis = new boolean[V];
+        
+        for(int i=0; i<V; i++){
+            if(!vis[i]){
+                dfs(i, vis, adj, st);
+            }
+        }
+        
+        // Verify the st topmost element
+        Stack<Integer> dummy = new Stack<>();
+        Arrays.fill(vis, false);
+        dfs(st.peek(), vis, adj, dummy);
+        
+        for(int i=0; i<V; i++){
+            if(vis[i] == false){
+                return -1;
+            }
+        }
+        
+        return st.peek();
+    }
 }
