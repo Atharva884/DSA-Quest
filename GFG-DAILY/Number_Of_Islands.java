@@ -39,6 +39,7 @@ class Solution {
         return temp;
     }
     
+    // TC: O(N^2), SC: O(N*M)
     public List<Integer> numOfIslands(int rows, int cols, int[][] operators) {
         int k = operators.length;
         
