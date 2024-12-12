@@ -9,9 +9,8 @@ class Pair{
 }
 
 class Solution {
+    // TC: O(N * (word.length * 26))
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        int m = endWord.length();
-
         HashSet<String> hs = new HashSet<>();
         for(int i=0; i<wordList.size(); i++){
             hs.add(wordList.get(i));   
