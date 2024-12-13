@@ -1,5 +1,6 @@
 // User function Template for Java
 
+// My code but i have used the frequency map
 // class Solution {
 //     public ArrayList<ArrayList<Integer>> construction(String[] dict, int[] inDegree,  int n){
 //         ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
@@ -75,12 +76,10 @@
 //             }
 //         }
         
-//         // If there are still nodes left with non-zero in-degree, there is a cycle
 //         if(temp.size() != len) {
-//             return "";  // Return an empty string if there's a cycle
+//             return "";  
 //         }
 
-//         // Construct the result string
 //         StringBuilder ans = new StringBuilder();
 //         for(int i=0; i<temp.size(); i++){
 //             ans.append((char) (temp.get(i) + 'a'));
