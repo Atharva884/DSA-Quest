@@ -1,6 +1,6 @@
 // User function Template for Java
 
-// My code but i have used the frequency map
+// My code but i have used the map
 // class Solution {
 //     public ArrayList<ArrayList<Integer>> construction(String[] dict, int[] inDegree,  int n){
 //         ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
