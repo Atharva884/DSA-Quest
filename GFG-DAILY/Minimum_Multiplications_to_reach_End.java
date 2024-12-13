@@ -12,6 +12,7 @@ class Pair{
 
 class Solution {
     int mod = (int) (1e5);
+    // TC: O(V+E), SC: O(V)
     int minimumMultiplications(int[] arr, int start, int end) {
         int n = arr.length;
         
