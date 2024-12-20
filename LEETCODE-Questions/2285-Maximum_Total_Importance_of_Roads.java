@@ -13,6 +13,7 @@ class Pair implements Comparable<Pair>{
 }
 
 class Solution {
+    // TC: O(m + nlogn), SC: O(n)
     public long maximumImportance(int n, int[][] roads) {
         int m = roads.length;
 
