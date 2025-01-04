@@ -46,6 +46,7 @@ class Solution {
         return ans;
     }
 
+    // TC: O(NlogN), SC: O(N)
     public int maxEnvelopes(int[][] envelopes) {
         int n = envelopes.length;
 
