@@ -16,6 +16,7 @@ class Solution {
         return dp[i][j][k] = Math.max(Math.max(x, y), z);
     }
     
+    // TC: O(N*M*O), SC: O(N*M*O)
     int LCSof3(String s1, String s2, String s3) {
         int n = s1.length();
         int m = s2.length();
