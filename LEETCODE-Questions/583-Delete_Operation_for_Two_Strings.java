@@ -16,6 +16,7 @@ class Solution {
         return dp[i][j] = Math.min(x, y);
     }
 
+    // TC: O(N*M), SC: O(N*M) + stack space
     public int minDistance(String word1, String word2) {
         int n = word1.length();
         int m = word2.length();
