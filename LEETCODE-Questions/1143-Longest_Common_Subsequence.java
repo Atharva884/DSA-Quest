@@ -28,13 +28,13 @@ class Solution {
     // return solve(text1, n-1, text2, m-1, dp);
     // }
 
+    // Iterative Approach -> Better in terms of space complexity
+    // TC: O(N*M), SC: O(N*M)
     public int longestCommonSubsequence(String s1, String s2) {
         int n = s1.length();
         int m = s2.length();
 
         int[][] dp = new int[n][m];
-
-       
 
         boolean firstRowMatch = false;
         for (int i = 0; i < m; i++) {
@@ -51,10 +51,6 @@ class Solution {
             }
             dp[i][0] = firstColMatch ? 1 : 0;
         }
-
-        // if(n == 1){
-        //     return dp[0][0];
-        // }
 
         for (int i = 1; i < n; i++) {
             for (int j = 1; j < m; j++) {
