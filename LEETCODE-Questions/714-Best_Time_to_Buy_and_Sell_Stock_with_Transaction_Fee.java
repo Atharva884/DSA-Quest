@@ -52,6 +52,8 @@ class Solution {
     //     return dp[0][1];
     // }
 
+    // Space Optimized
+    // TC: O(N*2), SC: O(4) -> 2 * 2 => 4 size array
     public int maxProfit(int[] prices, int fee){
         int n = prices.length;
 
