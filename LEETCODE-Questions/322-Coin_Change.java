@@ -17,6 +17,7 @@ class Solution {
         return dp[i][k] = Math.min(x, y);
     }
 
+    // TC: O(N*amount), SC: O(N*amount)
     public int coinChange(int[] coins, int amount) {
         int n = coins.length;
         int[][] dp = new int[n][amount + 1];
