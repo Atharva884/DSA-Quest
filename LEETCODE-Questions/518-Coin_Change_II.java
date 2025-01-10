@@ -16,6 +16,7 @@ class Solution {
         return dp[i][k] = x + y;
     }
 
+    // TC: O(N*amount), SC: O(N*amount)
     public int change(int amount, int[] coins) {
         int n = coins.length;
         int[][] dp = new int[n][amount+1];
