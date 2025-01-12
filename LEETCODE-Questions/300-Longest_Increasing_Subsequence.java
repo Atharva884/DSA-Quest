@@ -20,6 +20,7 @@ class Solution {
     //     return ans;
     // }
 
+    // TC: O(N*(logN)), SC: O(N)
     public int lengthOfLIS(int[] nums){
         int n = nums.length;
         int[] dp = new int[n];
