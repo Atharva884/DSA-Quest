@@ -7,6 +7,7 @@ class Solution{
         return false;
     }
     
+    // TC: O(32 * N) ~ O(N), SC: O(1)
     public long sumXOR(int arr[], int n) {
         
         long ans = 0;
