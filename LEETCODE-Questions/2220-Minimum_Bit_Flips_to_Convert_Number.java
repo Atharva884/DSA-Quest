@@ -5,6 +5,7 @@ class Solution {
         return 0;
     }
 
+    // TC: O(32), SC: O(1)
     public int minBitFlips(int start, int goal) {        
         int steps = 0;
 
