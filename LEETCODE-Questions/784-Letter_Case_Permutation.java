@@ -25,6 +25,8 @@ class Solution {
 
     }
 
+    // Recurison
+    // TC: O(2^N), SC: O(2^N)
     public List<String> letterCasePermutation(String s) {
         List<String> ans = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
@@ -33,4 +35,4 @@ class Solution {
 
         return ans;
     }
-}
+}   
