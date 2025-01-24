@@ -17,6 +17,8 @@ class Solution {
     //     return -1;
     // }
 
+    // Optimal Approach (Flyod Cycle Detection)
+    // TC: O(N), SC: O(1)
     public int findDuplicate(int[] nums){
         int n = nums.length;
 
