@@ -1,4 +1,6 @@
 class Solution {
+    // Brute Approach
+    // TC: O(N), SC: O(N)
     public int missingNumber(int[] nums) {
         int n = nums.length;
 
