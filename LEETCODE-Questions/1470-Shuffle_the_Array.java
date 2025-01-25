@@ -1,4 +1,5 @@
 class Solution {
+    // TC: O(N), O(1)
     public int[] shuffle(int[] nums, int n) {
         int len = nums.length;
 
