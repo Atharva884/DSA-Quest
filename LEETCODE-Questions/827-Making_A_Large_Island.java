@@ -48,34 +48,41 @@ class DisjointSet {
     }
 }
 
+// TC: O(2 * (n*n)), SC: O(n*n)
 class Solution {
     int[][] dirs = { { -1, 0 }, { 0, 1 }, { 0, -1 }, { 1, 0 } };
 
     public boolean checkBounds(int i, int j, int n) {
         return (i >= 0 && i < n && j >= 0 && j < n);
     }
+
+    public void dfs(int i, int j, int n, int[][] grid, DisjointSet ds) {
+
+        for (int d = 0; d < 4; d++) {
+            int iDash = i + dirs[d][0];
+            int jDash = j + dirs[d][1];
+
+            if (checkBounds(iDash, jDash, n) && grid[iDash][jDash] == 1) {
+                int u = (i * n) + j;
+                int v = (iDash * n) + jDash;
+
+                ds.union(u, v);
+            }
+        }
+
+    }
+
     public int largestIsland(int[][] grid) {
         int n = grid.length;
 
         DisjointSet ds = new DisjointSet(n * n);
 
         // Step 1) Find the size of each connected comp in the grid
+        // TC: O(N*N)
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (grid[i][j] == 1) {
-                    
-                    for (int d = 0; d < 4; d++) {
-                        int iDash = i + dirs[d][0];
-                        int jDash = j + dirs[d][1];
-
-                        if (checkBounds(iDash, jDash, n) && grid[iDash][jDash] == 1) {
-                            int u = (i * n) + j;
-                            int v = (iDash * n) + jDash;
-
-                            ds.union(u, v);
-                        }
-                    }
-
+                    dfs(i, j, n, grid, ds);
                 }
             }
         }
@@ -86,8 +93,7 @@ class Solution {
             max = Math.max(max, ds.size[i]);
         }
 
-       
-
+        // TC: O(N*N)
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (grid[i][j] == 0) {
