@@ -1,103 +1,117 @@
-class Solution {
-    int[][] dirs = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
+class DisjointSet {
+    int[] par;
+    int[] rank;
+    int[] size;
 
-    // Union By Rank & Size
-    public void union(int x, int y, int[] par, int[] rank, int[] size){
-        int px = find(x, par);
-        int py = find(y, par);
+    public DisjointSet(int n) {
+        par = new int[n];
+        rank = new int[n];
+        size = new int[n];
 
-        if(px == py) return;
+        for (int i = 0; i < n; i++) {
+            par[i] = i;
+            rank[i] = 1;
+            size[i] = 1;
+        }
+    }
 
-        if(rank[px] > rank[py]){
+    public boolean union(int x, int y) {
+        int px = find(x);
+        int py = find(y);
+
+        if (px == py)
+            return false;
+
+        if (rank[px] > rank[py]) {
             par[py] = px;
             size[px] += size[py];
-        }else if(rank[px] < rank[py]){
+        } else if (rank[px] < rank[py]) {
             par[px] = py;
             size[py] += size[px];
-        }else{
+        } else {
             par[px] = py;
+            size[py] += size[px];
             rank[py]++;
-            size[py] += size[px];
         }
+
+        return true;
     }
 
-    public int find(int x, int[] par){
-        if(par[x] == x){
+    public int find(int x) {
+        if (par[x] == x)
             return x;
-        }
 
-        int temp = find(par[x], par);
+        int temp = find(par[x]);
         par[x] = temp;
 
-        return par[x];
+        return temp;
     }
+}
 
-    public void dfs(int i, int j, int[][] grid, int n, int[] par, int[] rank, int[] size) {
+class Solution {
+    int[][] dirs = { { -1, 0 }, { 0, 1 }, { 0, -1 }, { 1, 0 } };
 
-        for(int d=0; d<4; d++){
-            int iDash = i + dirs[d][0];
-            int jDash = j + dirs[d][1];
-
-            if(iDash >= 0 && iDash < n && jDash >= 0 && jDash < n && grid[iDash][jDash] == 1){
-                int cellNo = (i * n) + j;
-                int nCellNo = (iDash * n) + jDash;
-
-                union(cellNo, nCellNo, par, rank, size);
-            }
-        }
-
+    public boolean checkBounds(int i, int j, int n) {
+        return (i >= 0 && i < n && j >= 0 && j < n);
     }
-
     public int largestIsland(int[][] grid) {
         int n = grid.length;
 
-        // Parent, Rank & Size Array
-        int[] par = new int[n * n];
-        int[] rank = new int[n * n];
-        int[] size = new int[n * n];
+        DisjointSet ds = new DisjointSet(n * n);
 
-        for (int i = 0; i < n * n; i++) {
-            par[i] = i;
-            size[i] = 1;
-            rank[i] = 1;
-        }
-
-        // Step 1
+        // Step 1) Find the size of each connected comp in the grid
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (grid[i][j] == 1) {
-                    // Move 4 directionally
-                    dfs(i, j, grid, n, par, rank, size);
+                    
+                    for (int d = 0; d < 4; d++) {
+                        int iDash = i + dirs[d][0];
+                        int jDash = j + dirs[d][1];
+
+                        if (checkBounds(iDash, jDash, n) && grid[iDash][jDash] == 1) {
+                            int u = (i * n) + j;
+                            int v = (iDash * n) + jDash;
+
+                            ds.union(u, v);
+                        }
+                    }
+
                 }
             }
         }
 
+        // Step 2) Covert 0 to 1 and check for the nbrs and get the max
         int max = -1;
-        for(int i=0; i<n*n; i++){
-            max = Math.max(max, size[i]);
+        for (int i = 0; i < n * n; i++) {
+            max = Math.max(max, ds.size[i]);
         }
 
-        // Step 2: Convert all 0's to 1 and get the large island
-        for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++){
-                if(grid[i][j] == 0){
-                    // Check four direction what's the size
+       
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0) {
+                    // To check for unique components
                     HashSet<Integer> hs = new HashSet<>();
-                    for(int d=0; d<4; d++){
+
+                    for (int d = 0; d < 4; d++) {
                         int iDash = i + dirs[d][0];
                         int jDash = j + dirs[d][1];
 
-                        if(iDash >= 0 && iDash < n && jDash >= 0 && jDash < n && grid[iDash][jDash] == 1){
-                            int newCellNo = (iDash * n) + jDash;
-                            hs.add(find(newCellNo, par));
+                        if (checkBounds(iDash, jDash, n) && grid[iDash][jDash] == 1) {
+                            int cellNo = (iDash * n) + jDash;
+                            int root = ds.find(cellNo);
+                            hs.add(root);
                         }
                     }
 
+                    // 1 for current
                     int sum = 1;
-                    for(int num: hs){
-                        sum += size[num];
+                    for (int num : hs) {
+                        sum += ds.size[num];
                     }
 
+                    // Get the max
                     max = Math.max(max, sum);
                 }
             }
