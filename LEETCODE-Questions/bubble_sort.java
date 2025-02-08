@@ -9,6 +9,7 @@ public class Solution {
         arr[j] = temp;
     }
 
+    // TC: O(N^2), SC: O(1)
     public static void main(String[] args) {
         Scanner scn = new Scanner(System.in);
         int n = scn.nextInt();
