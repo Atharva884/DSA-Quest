@@ -17,7 +17,7 @@ class Solution {
         return stud;
     }
     
-    // TC: O(log(max(arr) - sum(arr))), SC: O(1)
+    // TC: O(log(max(arr) - sum(arr))) * O(N), SC: O(1)
     public static int findPages(int[] arr, int k) {
         int n = arr.length;
         
