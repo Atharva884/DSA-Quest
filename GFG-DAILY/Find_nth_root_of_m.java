@@ -1,8 +1,7 @@
 // User function Template for Java
 
 class Solution {
-    // Brute Approach
-    // TC: O(nlogm), SC: O(1)
+    // TC: O(logm) * O(n), SC: O(1)
     public int nthRoot(int n, int m) {
         int lo = 0;
         int hi = m;
