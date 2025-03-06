@@ -1,142 +1,79 @@
-//{ Driver Code Starts
-// Initial Template for Java
-
-import java.io.*;
-import java.util.*;
-
-public class Main {
-
-    public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
-        int tc = sc.nextInt();
-        while (tc-- > 0) {
-            int n = sc.nextInt();
-            int m = sc.nextInt();
-            int arr[][] = new int[n][m];
-
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
-                    arr[i][j] = sc.nextInt();
-                }
-            }
-            int ans = new Solution().rowWithMax1s(arr);
-            System.out.println(ans);
-        }
-    }
-}
-
-// } Driver Code Ends
-
-
 // User function Template for Java
 
 class Solution {
-
-    // Naive Soln
+    // Brute Approach
     // TC: O(N*M), SC: O(1)
-    
     // public int rowWithMax1s(int arr[][]) {
     //     int n = arr.length;
     //     int m = arr[0].length;
         
-    //     int idx = -1;
     //     int max = 0;
+    //     int idx = -1;
         
-    //     for(int i = 0; i<n; i++){
-            
-    //         int count = 0;
+    //     for(int i=0; i<n; i++){
+    //         int cntOnes = 0;
             
     //         for(int j=0; j<m; j++){
     //             if(arr[i][j] == 1){
-    //                 count++;
+    //                 cntOnes++;
     //             }
     //         }
             
-    //         if(count > max){
-    //             max = count;
+    //         if(cntOnes > max){
+    //             max = cntOnes;
     //             idx = i;
     //         }
-            
-    //     }
-        
-    //     return idx;
-    // }
-
-    // Better Soln than naive int term of computation
-    
-    // public int rowWithMax1s(int arr[][]) {
-    //     int n = arr.length;
-    //     int m = arr[0].length;
-        
-    //     int idx = -1;
-    //     int max = 0;
-        
-    //     for(int i = 0; i<n; i++){
-            
-    //         int count = 0;
-    //         int id1 = -1;
-            
-    //         for(int j=0; j<m; j++){
-    //             if(arr[i][j] == 1){
-    //                 id1 = j;
-    //                 break;
-    //             }
-    //         }
-            
-    //         if(id1 != -1){
-    //             count = ((m-1) - id1) + 1; 
-    //         }
-    //         // System.out.println(count);
-            
-    //         if(count > max){
-    //             max = count;
-    //             idx = i;
-    //         }
-            
     //     }
         
     //     return idx;
     // }
     
-    
-    // Optimal Soln
-    // TC: O(n * log(m)), SC: O(1)
-    public static int lowerBound(int[] arr, int m, int key){
+    // Concept - {Smallest index whole value > x}
+    public int lowerBound(int[] arr, int x){
+        int n = arr.length;
+        
         int lo = 0;
-        int hi = m-1;
-        int ans = m;
+        int hi = n-1;
+        
+        int ans = -1;
         
         while(lo <= hi){
-            int mid = lo + (hi - lo)/2;
+            int m = lo + ((hi - lo) >> 1);
             
-            if(arr[mid] >= key){
-                ans = mid;
-                hi = mid - 1;
+            if(arr[m] > x){
+                ans = m;
+                hi = m - 1;
             }else{
-                lo = mid + 1;
+                lo = m + 1;
             }
         }
         
         return ans;
     }
     
+    // Optimal Approach
+    // TC: O(N * log(M)), SC: O(1)
     public int rowWithMax1s(int arr[][]) {
         int n = arr.length;
         int m = arr[0].length;
-        int max = 0;
+        
+        int max = Integer.MIN_VALUE;
         int idx = -1;
         
-        
         for(int i=0; i<n; i++){
+            int cntOnes = lowerBound(arr[i], 0);
             
-            int count_ones = m - lowerBound(arr[i], m, 1);
-            if(count_ones > max){
-                max = count_ones;
-                idx = i;
+            if(cntOnes != -1){
+                int ans = (m - cntOnes) + 1;
+                
+                if(ans > max){
+                    max = ans;
+                    idx = i;
+                }
             }
+            
         }
         
         return idx;
     }
-    
 }
