@@ -1,6 +1,7 @@
 // User function Template for Java
 
 class Solution {
+    // TC: O(NlogK), SC: O(k)
     public static int kthSmallest(int[] arr, int k) {
         int n = arr.length;
         
