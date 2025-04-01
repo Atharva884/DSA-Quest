@@ -1,5 +1,5 @@
 class Solution {
-    // TC: O(N + K), SC: O(N)
+    // TC: O(NlogN), SC: O(N)
     public long pickGifts(int[] gifts, int k) {
         PriorityQueue<Long> pq = new PriorityQueue<>(Collections.reverseOrder());
 
