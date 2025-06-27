@@ -13,7 +13,7 @@ public class Main {
             map.put(sb.toString(), sb.length());
         }
 
-        for(int i=0; i<n-1; i++){
+        for(int i=n-1; i>0; i--){
             StringBuilder sb = new StringBuilder();
             for(int j=i; j<n; j++){
                 sb.append(s.charAt(j));
