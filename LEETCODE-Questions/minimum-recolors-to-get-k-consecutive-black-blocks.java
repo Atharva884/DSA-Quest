@@ -44,7 +44,7 @@ class Solution {
 
     public int minimumRecolors(String blocks, int k) {
         // Brute Approach
-        // TC: O(N^2), SC: O(1)
+        // TC: O(N * K), SC: O(1)
         // return brute(blocks, k);
 
         // Optimal Approach
