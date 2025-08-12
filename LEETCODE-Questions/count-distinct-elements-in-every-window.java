@@ -45,7 +45,7 @@ class Solution {
         int n = arr.length;
         
         // Brute Approach
-        // TC: O(N^2), SC: O(k)
+        // TC: O(N * k), SC: O(k)
         // return brute(arr, n, k);
         
         // Optimal Approach
