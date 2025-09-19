@@ -31,7 +31,7 @@ public class Solution {
         return pfSum;
     }
     
-    public static int optimal(int[] arr){
+    public static int better(int[] arr){
         int n = arr.length;
         int[] pfSum = prefixSum(arr);
         
@@ -42,6 +42,18 @@ public class Solution {
                 if(sp-1 < 0) sum += pfSum[ep];
                 else sum += pfSum[ep] - pfSum[sp-1];
             }
+        }
+        
+        return sum;
+    }
+    
+    public static int optimal(int[] arr){
+        int n = arr.length;
+
+        int sum = 0;
+        for(int i=0; i<n; i++){
+            int occ = (i+1) * (n-i);
+            sum += (arr[i] * occ);
         }
         
         return sum;
@@ -61,8 +73,13 @@ public class Solution {
         // int ans = brute(arr);
         // System.out.println(ans);
 
-        // Optimal Approach
+        // Better Approach
         // TC: O(N) + O(N^2), SC: O(N)
+        // int ans = better(arr);
+        // System.out.println(ans);
+
+        // Optimal Approach -> Contribution technique
+        // TC: O(N), SC: O(1)
         int ans = optimal(arr);
         System.out.println(ans);
     }
