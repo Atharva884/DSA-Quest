@@ -1,51 +1,77 @@
+// Brute Approach
+// class NumMatrix {
+//     int[][] mat;
+//     // TC: O(N*M), SC: O(N*M)
+//     public NumMatrix(int[][] matrix) {
+//         int n = matrix.length;
+//         int m = matrix[0].length;
+//         mat = new int[n][m];
+
+//         for(int i=0; i<n; i++){
+//             for(int j=0; j<m; j++){
+//                 mat[i][j] = matrix[i][j];
+//             }
+//         }
+//     }
+    
+//     // Worst case: where all operations are row1,col1 = (0, 0) and row2,col2 = (n-1, m-1)
+//     // TC: O(N*M), SC: O(1)
+//     public int sumRegion(int row1, int col1, int row2, int col2) {
+//         int sum = 0;
+//         for(int i=row1; i<=row2; i++){
+//             for(int j=col1; j<=col2; j++){
+//                 sum += mat[i][j];
+//             }
+//         }
+
+//         return sum;
+//     }
+// }
+
+// Optimal Approach
 class NumMatrix {
-    int[][] pfMat;
+    int[][] mat;
 
-    public static void prefixRowWise(int[][] matrix, int[][] pfMat, int n, int m){
-        
-        for(int i=0; i<n; i++){
-            pfMat[i][0] = matrix[i][0];
-
-            for(int j=1; j<m; j++){
-                pfMat[i][j] = pfMat[i][j-1] + matrix[i][j];
-            }
-        }
-    }
-
-    public static void prefixColWise(int[][] matrix, int[][] pfMat, int n, int m){
-        for(int i=0; i<m; i++){
-            for(int j=1; j<n; j++){
-                pfMat[j][i] = pfMat[j-1][i] + pfMat[j][i];
-            }
-        }
-    }
-
-    // TC: O(2 * (N*M)) ~ O(N*M), SC: O(N*M)
+    // TC: O(N*M), SC: O(N*M)
     public NumMatrix(int[][] matrix) {
         int n = matrix.length;
         int m = matrix[0].length;
+        mat = new int[n][m];
 
-        pfMat = new int[n][m];
+        // Prefix Sum on Row
+        for(int i=0; i<n; i++){
+            int sum = matrix[i][0];
+            mat[i][0] = sum;
+            for(int j=1; j<m; j++){
+                sum += matrix[i][j];
+                mat[i][j] = sum;
+            }
+        }
 
-        prefixRowWise(matrix, pfMat, n, m);
-
-        prefixColWise(matrix, pfMat, n, m);
+        // Prefix Sum on Col
+        for(int i=0; i<m; i++){
+            int sum = mat[0][i];
+            for(int j=1; j<n; j++){
+                sum += mat[j][i];
+                mat[j][i] = sum;
+            }
+        }       
     }
     
     // TC: O(1), SC: O(1)
-    public int sumRegion(int x1, int y1, int x2, int y2) {
-        int ans = pfMat[x2][y2];
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        int ans = mat[row2][col2];
 
-        if(x1 - 1 >= 0){
-            ans = ans - pfMat[x1-1][y2];
+        if(row1 - 1 >= 0){
+            ans -= mat[row1-1][col2];
         }
 
-        if(y1 - 1 >= 0){
-            ans = ans - pfMat[x2][y1-1];
+        if(col1 - 1 >= 0){
+            ans -= mat[row2][col1-1];
         }
 
-        if(x1 - 1 >= 0 && y1 - 1 >= 0){
-            ans = ans + pfMat[x1-1][y1-1];
+        if(row1-1 >= 0 && col1-1 >= 0){
+            ans += mat[row1-1][col1-1];
         }
 
         return ans;
